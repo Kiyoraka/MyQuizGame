@@ -6,8 +6,8 @@ class Quiz {
         this.currentQuestion = 0;
         this.quizContainer = document.querySelector('.quiz-container');
         this.sounds = {
-            correct: new Audio('assets/sound/ting.wav'),
-            incorrect: new Audio('assets/sound/tong.wav')
+            correct: new Audio('assets/sound/Correct.wav'),
+            incorrect: new Audio('assets/sound/Wrong.wav')
         };
         this.init();
     }
