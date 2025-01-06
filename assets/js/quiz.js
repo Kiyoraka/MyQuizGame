@@ -12,6 +12,10 @@ class Quiz {
         this.init();
     }
 
+    init() {
+        this.renderQuestion();
+    }
+
     renderQuestion() {
         const question = this.questions[this.currentQuestion];
         
@@ -26,18 +30,14 @@ class Quiz {
                         </button>
                     `).join('')}
                 </div>
+                <div class="result-overlay">
+                    <div class="feedback-text"></div>
+                </div>
             </div>
         `;
 
-        // Clear previous content except result overlay
-        const resultOverlay = this.quizContainer.querySelector('.result-overlay');
-        this.quizContainer.innerHTML = '';
-        if (resultOverlay) this.quizContainer.appendChild(resultOverlay);
-
-        // Add new question
-        const tempDiv = document.createElement('div');
-        tempDiv.innerHTML = questionHTML;
-        this.quizContainer.insertBefore(tempDiv.firstElementChild, resultOverlay);
+        // Clear previous content
+        this.quizContainer.innerHTML = questionHTML;
 
         // Add event listeners to new options
         const options = this.quizContainer.querySelectorAll('.option');
@@ -54,7 +54,7 @@ class Quiz {
         const options = document.querySelectorAll('.option');
         options.forEach(option => option.disabled = true);
 
-        // Show result image
+        // Show result and play sound
         this.showResult(isCorrect);
 
         // Update score if correct
@@ -74,12 +74,19 @@ class Quiz {
     }
 
     showResult(isCorrect) {
-        const resultImage = document.getElementById('resultImage');
-        resultImage.src = isCorrect ? 'assets/img/correct.png' : 'assets/img/wrong.png';
-        resultImage.style.display = 'block';
+        // Play the appropriate sound
+        const sound = isCorrect ? this.sounds.correct : this.sounds.incorrect;
+        sound.currentTime = 0; // Reset sound to start
+        sound.play();
+
+        // Show feedback text
+        const feedbackElement = this.quizContainer.querySelector('.feedback-text');
+        feedbackElement.textContent = isCorrect ? 'CORRECT!' : 'INCORRECT!';
+        feedbackElement.className = 'feedback-text ' + (isCorrect ? 'correct' : 'incorrect');
+        feedbackElement.style.display = 'block';
 
         setTimeout(() => {
-            resultImage.style.display = 'none';
+            feedbackElement.style.display = 'none';
         }, 1500);
     }
 
