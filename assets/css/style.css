@@ -1,3 +1,4 @@
+/* assets/css/style.css */
 * {
     margin: 0;
     padding: 0;
@@ -9,33 +10,37 @@ body {
     min-height: 100vh;
     background: linear-gradient(45deg, #00c3ff, #1a75ff);
     display: flex;
+    flex-direction: column;
 }
 
 .sidebar {
-    width: 240px;
     background: rgba(255, 255, 255, 0.1);
     backdrop-filter: blur(10px);
-    border-right: 1px solid rgba(255, 255, 255, 0.2);
-    padding: 20px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 15px;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
+    justify-content: center;
+    gap: 10px;
+    flex-wrap: wrap;
 }
 
 .logo {
     color: white;
-    font-size: 24px;
-    margin-bottom: 40px;
+    font-size: 20px;
     text-align: center;
+    width: 100%;
+    margin-bottom: 10px;
 }
 
 .menu-item {
     color: white;
-    padding: 15px 20px;
-    margin: 5px 0;
-    border-radius: 10px;
+    padding: 10px 20px;
+    border-radius: 8px;
     cursor: pointer;
     transition: background 0.3s;
     background: rgba(255, 255, 255, 0.1);
+    font-size: 14px;
 }
 
 .menu-item:hover {
@@ -48,17 +53,18 @@ body {
 
 .main-content {
     flex: 1;
-    padding: 20px;
+    padding: 15px;
+    overflow-y: auto;
 }
 
 .content-panel {
     background: rgba(255, 255, 255, 0.1);
     backdrop-filter: blur(10px);
     border-radius: 15px;
-    padding: 20px;
+    padding: 15px;
     color: white;
-    height: calc(100vh - 40px);
     display: none;
+    height: 100%;
 }
 
 .content-panel.active {
@@ -66,11 +72,56 @@ body {
 }
 
 .panel-title {
-    font-size: 24px;
-    margin-bottom: 20px;
+    font-size: 20px;
+    margin-bottom: 15px;
+    text-align: center;
 }
 
-.panel-content {
-    font-size: 16px;
-    line-height: 1.6;
+/* Media Queries for Desktop */
+@media (min-width: 768px) {
+    body {
+        flex-direction: row;
+    }
+
+    .sidebar {
+        width: 180px;
+        flex-direction: column;
+        border-right: 1px solid rgba(255, 255, 255, 0.2);
+        border-bottom: none;
+        padding: 20px;
+        height: 100vh;
+        justify-content: flex-start;
+        gap: 15px;
+    }
+
+    .logo {
+        font-size: 24px;
+        margin-bottom: 20px;
+        text-align: left;
+    }
+
+    .menu-item {
+        width: 100%;
+        font-size: 16px;
+        padding: 12px 15px;
+        text-align: left;
+    }
+
+    .main-content {
+        flex: 1;
+        padding: 30px;
+        max-width: calc(100% - 180px);
+    }
+
+    .content-panel {
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 30px;
+    }
+
+    .panel-title {
+        font-size: 24px;
+        margin-bottom: 30px;
+        text-align: left;
+    }
 }

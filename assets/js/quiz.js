@@ -1,20 +1,21 @@
 // assets/js/quiz.js
 class Quiz {
     constructor() {
-        this.questions = htmlQuestions; // Updated to use htmlQuestions
+        this.questions = htmlQuestions;
         this.score = 0;
         this.currentQuestion = 0;
         this.quizContainer = document.querySelector('.quiz-container');
+        this.sounds = {
+            correct: new Audio('assets/sound/ting.wav'),
+            incorrect: new Audio('assets/sound/tong.wav')
+        };
         this.init();
-    }
-
-    init() {
-        this.renderQuestion();
     }
 
     renderQuestion() {
         const question = this.questions[this.currentQuestion];
         
+        // Create question container
         const questionHTML = `
             <div class="question" id="question${this.currentQuestion + 1}">
                 <h3>${this.currentQuestion + 1}. ${question.question}</h3>
@@ -28,11 +29,9 @@ class Quiz {
             </div>
         `;
 
-        // Clear previous content except score display and result overlay
-        const scoreDisplay = this.quizContainer.querySelector('.score-display');
+        // Clear previous content except result overlay
         const resultOverlay = this.quizContainer.querySelector('.result-overlay');
         this.quizContainer.innerHTML = '';
-        if (scoreDisplay) this.quizContainer.appendChild(scoreDisplay);
         if (resultOverlay) this.quizContainer.appendChild(resultOverlay);
 
         // Add new question
