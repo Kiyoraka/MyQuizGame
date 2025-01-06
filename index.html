@@ -3,22 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Basic Web Quiz Game</title>
+    <title>Quiz Game</title>
     <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/quiz.css">
 </head>
 <body>
     <div class="sidebar">
-        <div class="logo">Basic Web Quiz Game</div>
-        <div class="menu-item active" data-topic="1">Topic 1</div>
+        <div class="logo">Quiz Game</div>
+        <div class="menu-item active" data-topic="1">HTML</div>
         <div class="menu-item" data-topic="2">Topic 2</div>
         <div class="menu-item" data-topic="3">Topic 3</div>
     </div>
     
     <div class="main-content">
         <div class="content-panel active" id="topic1">
-            <h2 class="panel-title">Topic 1</h2>
-            <div class="panel-content">
-                Content for Topic 1 goes here.
+            <h2 class="panel-title">HTML Quiz</h2>
+            <div class="quiz-container">
+                <div class="result-overlay">
+                    <img id="resultImage" src="" alt="Result" style="display: none;">
+                </div>
             </div>
         </div>
         <div class="content-panel" id="topic2">
@@ -35,6 +38,8 @@
         </div>
     </div>
 
+    <script src="assets/js/html.js"></script>
+    <script src="assets/js/quiz.js"></script>
     <script src="assets/js/script.js"></script>
 </body>
 </html>

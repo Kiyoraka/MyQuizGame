@@ -1,0 +1,63 @@
+/* Add to assets/css/quiz.css */
+.quiz-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.question {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+
+.options {
+    display: grid;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.option {
+    background: rgba(255, 255, 255, 0.2);
+    border: none;
+    padding: 15px;
+    border-radius: 5px;
+    color: white;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background 0.3s;
+    text-align: left;
+}
+
+.option:hover {
+    background: rgba(255, 255, 255, 0.3);
+}
+
+.result-overlay {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1000;
+}
+
+.result-overlay img {
+    max-width: 200px;
+    animation: fadeInOut 2s ease-in-out;
+}
+
+.score-display {
+    background: rgba(255, 255, 255, 0.2);
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+@keyframes fadeInOut {
+    0% { opacity: 0; }
+    20% { opacity: 1; }
+    80% { opacity: 1; }
+    100% { opacity: 0; }
+}
