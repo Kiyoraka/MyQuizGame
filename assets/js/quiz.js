@@ -1,10 +1,40 @@
 // assets/js/quiz.js
 class Quiz {
-    constructor() {
-        this.questions = htmlQuestions;
+    constructor(topic) {
+        // Set questions based on topic
+        switch(topic) {
+            case 'html':
+                this.questions = htmlQuestions;
+                break;
+            case 'css':
+                this.questions = cssQuestions;
+                break;
+            case 'js':
+                this.questions = jsQuestions;
+                break;
+            case 'erd':
+                this.questions = erdQuestions;
+                break;
+            case 'dfd':
+                this.questions = dfdQuestions;
+                break;
+            case 'php':
+                this.questions = phpQuestions;
+                break;
+            case 'sql':
+                this.questions = sqlQuestions;
+                break;
+            default:
+                this.questions = htmlQuestions;
+        }
+        
         this.score = 0;
         this.currentQuestion = 0;
-        this.quizContainer = document.querySelector('.quiz-container');
+        
+        // Get the active panel's quiz container
+        const activePanel = document.querySelector('.content-panel.active');
+        this.quizContainer = activePanel.querySelector('.quiz-container');
+        
         this.sounds = {
             correct: new Audio('assets/sound/Correct.wav'),
             incorrect: new Audio('assets/sound/Wrong.wav')
@@ -51,7 +81,7 @@ class Quiz {
         const isCorrect = button.getAttribute('data-correct') === 'true';
         
         // Disable all options for current question
-        const options = document.querySelectorAll('.option');
+        const options = this.quizContainer.querySelectorAll('.option');
         options.forEach(option => option.disabled = true);
 
         // Show result and play sound
@@ -99,19 +129,10 @@ class Quiz {
     }
 }
 
-// Initialize quiz when HTML topic is active
+// Initialize quiz when page loads
 document.addEventListener('DOMContentLoaded', () => {
     const htmlTopic = document.getElementById('topic1');
     if (htmlTopic.classList.contains('active')) {
-        new Quiz();
+        new Quiz('html');
     }
-});
-
-// Initialize quiz when switching to HTML topic
-document.querySelectorAll('.menu-item').forEach(item => {
-    item.addEventListener('click', () => {
-        if (item.getAttribute('data-topic') === '1') {
-            new Quiz();
-        }
-    });
 });
