@@ -1,7 +1,6 @@
 // assets/js/quiz.js
 class Quiz {
     constructor(topic) {
-        // Set questions based on topic
         switch(topic) {
             case 'html':
                 this.questions = htmlQuestions;
@@ -30,11 +29,8 @@ class Quiz {
         
         this.score = 0;
         this.currentQuestion = 0;
-        
-        // Get the active panel's quiz container
         const activePanel = document.querySelector('.content-panel.active');
         this.quizContainer = activePanel.querySelector('.quiz-container');
-        
         this.sounds = {
             correct: new Audio('assets/sound/Correct.wav'),
             incorrect: new Audio('assets/sound/Wrong.wav')
@@ -48,8 +44,6 @@ class Quiz {
 
     renderQuestion() {
         const question = this.questions[this.currentQuestion];
-        
-        // Create question container
         const questionHTML = `
             <div class="question" id="question${this.currentQuestion + 1}">
                 <h3>${this.currentQuestion + 1}. ${question.question}</h3>
@@ -62,14 +56,13 @@ class Quiz {
                 </div>
                 <div class="result-overlay">
                     <div class="feedback-text"></div>
+                    <div class="correct-answer" style="display: none;"></div>
                 </div>
             </div>
         `;
 
-        // Clear previous content
         this.quizContainer.innerHTML = questionHTML;
 
-        // Add event listeners to new options
         const options = this.quizContainer.querySelectorAll('.option');
         options.forEach(option => {
             option.addEventListener('click', (e) => this.handleAnswer(e));
@@ -80,19 +73,39 @@ class Quiz {
         const button = event.target;
         const isCorrect = button.getAttribute('data-correct') === 'true';
         
-        // Disable all options for current question
+        // Disable all options and highlight correct answer
         const options = this.quizContainer.querySelectorAll('.option');
-        options.forEach(option => option.disabled = true);
+        options.forEach(option => {
+            option.disabled = true;
+            if (option.getAttribute('data-correct') === 'true') {
+                option.style.backgroundColor = 'rgba(0, 255, 0, 0.2)';
+                option.style.color = '#00ff00';
+            }
+        });
 
         // Show result and play sound
         this.showResult(isCorrect);
 
-        // Update score if correct
         if (isCorrect) {
             this.score++;
+            button.style.backgroundColor = 'rgba(0, 255, 0, 0.2)';
+            button.style.color = '#00ff00';
+        } else {
+            button.style.backgroundColor = 'rgba(255, 0, 0, 0.2)';
+            button.style.color = '#ff0000';
         }
 
-        // Move to next question or show final score
+        // Display the correct answer
+        const correctAnswer = Array.from(options).find(option => option.getAttribute('data-correct') === 'true').textContent;
+        const correctAnswerElement = this.quizContainer.querySelector('.correct-answer');
+        correctAnswerElement.innerHTML = `Correct Answer: ${correctAnswer}`;
+        correctAnswerElement.style.display = 'block';
+        correctAnswerElement.style.marginTop = '20px';
+        correctAnswerElement.style.textAlign = 'center';
+        correctAnswerElement.style.color = '#00ff00';
+        correctAnswerElement.style.fontWeight = 'bold';
+
+        // Move to next question or show final score after 5 seconds
         setTimeout(() => {
             if (this.currentQuestion < this.questions.length - 1) {
                 this.currentQuestion++;
@@ -100,16 +113,14 @@ class Quiz {
             } else {
                 this.showFinalScore();
             }
-        }, 2000);
+        }, 5000);
     }
 
     showResult(isCorrect) {
-        // Play the appropriate sound
         const sound = isCorrect ? this.sounds.correct : this.sounds.incorrect;
-        sound.currentTime = 0; // Reset sound to start
+        sound.currentTime = 0;
         sound.play();
 
-        // Show feedback text
         const feedbackElement = this.quizContainer.querySelector('.feedback-text');
         feedbackElement.textContent = isCorrect ? 'CORRECT!' : 'INCORRECT!';
         feedbackElement.className = 'feedback-text ' + (isCorrect ? 'correct' : 'incorrect');
@@ -129,7 +140,6 @@ class Quiz {
     }
 }
 
-// Initialize quiz when page loads
 document.addEventListener('DOMContentLoaded', () => {
     const htmlTopic = document.getElementById('topic1');
     if (htmlTopic.classList.contains('active')) {
