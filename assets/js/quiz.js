@@ -95,16 +95,6 @@ class Quiz {
             button.style.color = '#ff0000';
         }
 
-        // Display the correct answer
-        const correctAnswer = Array.from(options).find(option => option.getAttribute('data-correct') === 'true').textContent;
-        const correctAnswerElement = this.quizContainer.querySelector('.correct-answer');
-        correctAnswerElement.innerHTML = `Correct Answer: ${correctAnswer}`;
-        correctAnswerElement.style.display = 'block';
-        correctAnswerElement.style.marginTop = '20px';
-        correctAnswerElement.style.textAlign = 'center';
-        correctAnswerElement.style.color = '#00ff00';
-        correctAnswerElement.style.fontWeight = 'bold';
-
         // Move to next question or show final score after 5 seconds
         setTimeout(() => {
             if (this.currentQuestion < this.questions.length - 1) {
